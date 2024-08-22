@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Template-->
-<template id="template_project" xml:space="preserve">
+<template>
     <t t-name="ProjectDashBoardMain">
-        <div class="dashboard-main">
-            Hello Odooers , welcome to the odoo dahboard tut
+        <div class="o_control_panel">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div id="total_projects_main" class="col-md-6 mt-4" t-on-click="">
+                                <div class="project_box" style="height: 180px">
+                                    <div class="row">
+                                        <div class="col-md-12 mt-5">
+                                            <img src="project_dashboard/static/src/images/search-img.png"
+                                                 style="width: 50px; height: 50px" alt="search"
+                                            />
+                                        </div>
+                                        <div class="col-md-12 mt-3">
+                                            <span class="project_count"
+                                                  id="total_projects">
+                                                <t t-esc="this.project_state.projects_count"/>
+                                            </span>
+                                            <br/>
+                                            <span class="project_box_title">Projects</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </t>
 </template>

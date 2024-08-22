@@ -1,10 +1,14 @@
 /** @odoo-module */
 
 import {registry} from  '@web/core/registry'
-const {Component} = owl
+const {Component, useState} = owl
 
 export class ProjectDashboard extends Component{
-
+    setup(){
+        this.project_state = useState({
+            projects_count : 100
+        }) ;
+    }
 }
 
 ProjectDashboard.template ="ProjectDashBoardMain"
