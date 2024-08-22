@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Template-->
+<template id="template_project" xml:space="preserve">
+    <t t-name="ProjectDashBoardMain">
+        <div class="dashboard-main">
+            Hello Odooers , welcome to the odoo dahboard tut
+        </div>
+    </t>
+</template>
