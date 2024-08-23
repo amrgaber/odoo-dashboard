@@ -5,9 +5,11 @@ import {registry} from  '@web/core/registry'
 const {Component, onWillStart, useState} = owl
 
 import {jsonrpc} from "@web/core/network/rpc_service"
+import {useService} from "@web/core/utils/hooks";
 
 export class ProjectDashboard extends Component{
     setup(){
+        this.action  = useService("action")
         this.project_state = useState({
             projects_count : 0,
             project_ids:[]
@@ -33,9 +35,29 @@ export class ProjectDashboard extends Component{
 
     _onClickProjects(){
         var project_ids = this.project_state.project_ids
-        if(project_ids){
-            console.log(project_ids)
+        // Action - way 1
+        let context = {}
+        var options = {
+            additional_context: context,
+            clearBreadcrumbs:false
         }
+        this.action.doAction({
+            name : ("Projects"),
+            type: 'ir.actions.act_window',
+            res_model:'project.project',
+            view_mode:'form',
+            views:[[false, 'list']],
+            domain:[['id', 'in', project_ids]],
+            context :{
+                create:false
+            },
+            target :'current'
+        }, options)
+        // Action = way 2
+        // let xml_id = "project.open_view_project_all_config"
+        // this.action.doAction(xml_id,{
+        //     options
+        // });
     }
 
 }
