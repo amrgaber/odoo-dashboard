@@ -2,7 +2,7 @@
 
 import {registry} from '@web/core/registry'
 
-const {Component, onWillStart, onMounted, useState} = owl
+const {Component, onWillStart, onMounted, useState, useRef} = owl
 
 import {jsonrpc} from "@web/core/network/rpc_service"
 import {useService} from "@web/core/utils/hooks";
@@ -10,6 +10,8 @@ import {useService} from "@web/core/utils/hooks";
 export class ProjectDashboard extends Component {
     setup() {
         this.action = useService("action")
+        this.project_hours_ref = useRef("project_hours_ref")
+        this.project_hours_ref_pie = useRef("project_hours_ref_pie")
         this.project_state = useState({
             projects_count: 0,
             project_ids: []
@@ -37,70 +39,47 @@ export class ProjectDashboard extends Component {
         });
     }
 
-    render_projects_hours() {
-        var self = this;
-        var ctx = $('.project_hours')
-        var data = {
-            labels: [
-                'ProA',
-                'ProjB',
-                'ProjC'
-            ],
-            datasets: [
-                {
-                    label: "Dataset",
-                    data: [100, 200, 300],
-                    backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)'
-                    ],
-                    hoverOffset: 4
-                }
-            ]
-        }
-        jsonrpc("web/dataset/call_kw/project.project/get_project_hours_pie", {
+    async render_projects_hours() {
+        const result_data = await this.fetchProjectHoursData();
+        const chartData = this.prepareChartData(result_data);
+        const $el = $(this.project_hours_ref.el);
+        const $el_pie = $(this.project_hours_ref_pie.el);
+        this.createChart($el,"doughnut",chartData)
+        this.createChart($el_pie,"pie",chartData)
+    }
+
+    fetchProjectHoursData() {
+        return jsonrpc("web/dataset/call_kw/project.project/get_project_hours_pie", {
             model: 'project.project',
             method: 'get_project_hours_pie',
             args: [{}],
             kwargs: {}
-        }).then(function (result_data) {
-            var data = {
-                labels: result_data[1],
-                datasets: [{
-                    label: "Count",
-                    data: result_data[0],
-                    backgroundColor: [
-                        "#f95d6a",
-                        "#665191",
-                        "#d45087",
-                        "#ff7c43",
-                        "#003f5c",
-                        "#2f4b7c",
-                        "#ffa600",
-                        "#a05195",
-                        "#6d5c16"
-                    ],
-                    borderColor: [
-                        "#003f5c",
-                        "#2f4b7c",
-                        "#f95d6a",
-                        "#665191",
-                        "#d45087",
-                        "#ff7c43",
-                        "#ffa600",
-                        "#a05195",
-                        "#6d5c16"
-                    ],
-                    borderWidth: 3
-                }]
-            };
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: data,
-            });
-
         });
+    }
+
+    prepareChartData(result_data) {
+        const labels = result_data[1]
+        const data = result_data[0]
+        const colors = generateDynamicColors(labels.length)
+        return {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Count",
+                    data: data,
+                    backgroundColor: colors,
+                    borderColor: colors.map(color => color.replace('50%', '40%')),
+                    borderWidth:3
+                }
+            ]
+        }
+    }
+
+    createChart(element, type, data) {
+        new Chart(element, {
+            type: type,
+            data: data,
+        })
     }
 
 

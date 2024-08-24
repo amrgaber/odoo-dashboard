@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Template-->
-<template>
+<!-- Template for the project dashboard -->
+<templates>
     <t t-name="ProjectDashBoardMain">
         <div class="o_control_panel">
             <div class="container-fluid">
                 <div class="row mt-5">
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-3">
                         <div class="row">
                             <div id="total_projects_main" class="col-sm-12 col-md-6"
                                  t-on-click="_onClickProjects">
@@ -19,7 +19,7 @@
                                         <div class="col-md-12 mt-3">
                                             <span class="project_count"
                                                   id="total_projects">
-                                                <t t-esc="this.project_state.projects_count"/>
+                                                <t t-esc="this.project_state.projects_counts"/>
                                             </span>
                                             <br/>
                                             <span class="project_box_title">Projects</span>
@@ -29,14 +29,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div id="total_projects_per_hours" class="col-sm-12 col-md-6">
-                            <div class="projects_hours_pie_div half_chart chart-container card-shadow">
-                                <h2>Projects by Hours</h2>
-                                <hr/>
-                                <div class="graph_canvas">
-                                    <canvas class="project_hours" width="300"
-                                            height="200"/>
+                    <div class="col-sm-12 col-md-9">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="projects_hours_pie_div half_chart chart-container card-shadow">
+                                    <h2>Projects by Hours - doughnut</h2>
+                                    <hr/>
+                                    <div class="graph_canvas">
+                                        <canvas t-ref="project_hours_ref" class="project_hours" width="300"
+                                                height="200"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="projects_hours_pie_div half_chart chart-container card-shadow">
+                                    <h2>Projects by Hours - Pie</h2>
+                                    <hr/>
+                                    <div class="graph_canvas">
+                                        <canvas t-ref="project_hours_ref_pie" class="project_hours_pie" width="300"
+                                                height="200"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -46,4 +58,4 @@
             </div>
         </div>
     </t>
-</template>
+</templates>

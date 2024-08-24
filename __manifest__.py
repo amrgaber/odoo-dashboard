@@ -19,6 +19,7 @@
         'web.assets_backend': [
             'project_dashboard/static/src/css/dashboard.css',
             'https://cdn.jsdelivr.net/npm/chart.js',
+            'project_dashboard/static/src/js/helper.js',
             'project_dashboard/static/src/js/dashboard.js',
             'project_dashboard/static/src/xml/dashboard.xml',
         ]},
