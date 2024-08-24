@@ -23,7 +23,8 @@ export class ProjectDashboard extends Component {
     async onWillStart() {
         await this.fetchDataProject();
     }
-    async onMounted(){
+
+    async onMounted() {
         this.render_projects_hours();
     }
 
@@ -58,10 +59,47 @@ export class ProjectDashboard extends Component {
                 }
             ]
         }
+        jsonrpc("web/dataset/call_kw/project.project/get_project_hours_pie", {
+            model: 'project.project',
+            method: 'get_project_hours_pie',
+            args: [{}],
+            kwargs: {}
+        }).then(function (result_data) {
+            var data = {
+                labels: result_data[1],
+                datasets: [{
+                    label: "Count",
+                    data: result_data[0],
+                    backgroundColor: [
+                        "#f95d6a",
+                        "#665191",
+                        "#d45087",
+                        "#ff7c43",
+                        "#003f5c",
+                        "#2f4b7c",
+                        "#ffa600",
+                        "#a05195",
+                        "#6d5c16"
+                    ],
+                    borderColor: [
+                        "#003f5c",
+                        "#2f4b7c",
+                        "#f95d6a",
+                        "#665191",
+                        "#d45087",
+                        "#ff7c43",
+                        "#ffa600",
+                        "#a05195",
+                        "#6d5c16"
+                    ],
+                    borderWidth: 3
+                }]
+            };
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+            });
 
-        var chart = new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
         });
     }
 
