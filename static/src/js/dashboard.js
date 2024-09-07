@@ -27,7 +27,7 @@ export class ProjectDashboard extends Component {
     }
 
     async onMounted() {
-        this.render_projects_hours();
+        await this.render_projects_hours();
     }
 
     // Fetch data from project
