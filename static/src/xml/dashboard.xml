@@ -1,59 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Template for the project dashboard -->
 <templates>
     <t t-name="ProjectDashBoardMain">
         <div class="o_control_panel">
             <div class="container-fluid">
-                <div class="row mt-5">
-                    <div class="col-sm-12 col-md-3">
-                        <div class="row">
-                            <div id="total_projects_main" class="col-sm-12 col-md-6"
-                                 t-on-click="_onClickProjects">
-                                <div class="project_box" style="height: 180px">
-                                    <div class="row">
-                                        <div class="col-md-12 mt-5">
-                                            <img src="project_dashboard/static/src/images/search-img.png"
-                                                 style="width: 50px; height: 50px" alt="search"
-                                            />
-                                        </div>
-                                        <div class="col-md-12 mt-3">
-                                            <span class="project_count"
-                                                  id="total_projects">
-                                                <t t-esc="this.project_state.projects_counts"/>
-                                            </span>
-                                            <br/>
-                                            <span class="project_box_title">Projects</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-9">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6">
-                                <div class="projects_hours_pie_div half_chart chart-container card-shadow">
-                                    <h2>Projects by Hours - doughnut</h2>
-                                    <hr/>
-                                    <div class="graph_canvas">
-                                        <canvas t-ref="project_hours_ref" class="project_hours" width="300"
-                                                height="200"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <div class="projects_hours_pie_div half_chart chart-container card-shadow">
-                                    <h2>Projects by Hours - Pie</h2>
-                                    <hr/>
-                                    <div class="graph_canvas">
-                                        <canvas t-ref="project_hours_ref_pie" class="project_hours_pie" width="300"
-                                                height="200"/>
-                                    </div>
-                                </div>
+                <div class="row mt-4">
+                    <!-- Project count box (smaller) -->
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-2 mb-4">
+                        <div id="total_projects_main" class="project_box card" t-on-click="_onClickProjects">
+                            <div class="card-body text-center">
+                                <img src="project_dashboard/static/src/images/search-img.png" class="img-fluid mb-2" alt="search" style="max-width: 40px;"/>
+                                <h3 class="project_count" id="total_projects">
+                                    <t t-esc="this.project_state.projects_count"/>
+                                </h3>
+                                <p class="project_box_title small">Projects</p>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Charts (larger) -->
+                    <div class="col-12 col-sm-6 col-md-9 col-lg-10">
+                        <div class="row">
+                            <!-- Doughnut chart -->
+                            <div class="col-12 col-lg-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Projects by Hours - Doughnut</h5>
+                                        <hr/>
+                                        <div class="chart-container" style="position: relative; height: 300px;">
+                                            <canvas t-ref="project_hours_ref" class="project_hours"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pie chart -->
+                            <div class="col-12 col-lg-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Projects by Hours - Pie</h5>
+                                        <hr/>
+                                        <div class="chart-container" style="position: relative; height: 300px;">
+                                            <canvas t-ref="project_hours_ref_pie" class="project_hours_pie"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
