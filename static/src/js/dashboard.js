@@ -12,6 +12,7 @@ export class ProjectDashboard extends Component {
         this.action = useService("action")
         this.project_hours_ref = useRef("project_hours_ref")
         this.project_hours_ref_pie = useRef("project_hours_ref_pie")
+        this.project_count_per_emp = useRef("project_count_per_emp")
         this.project_state = useState({
             projects_count: 0,
             project_ids: []
@@ -28,6 +29,24 @@ export class ProjectDashboard extends Component {
 
     async onMounted() {
         await this.render_projects_hours();
+        await this.render_project_employee();
+    }
+
+    async render_project_employee(){
+        var result_data = await this.fetchProjectEmployeeData()
+        var $project_by_emp = $(this.project_count_per_emp.el)
+        var bar_data = this.prepareChartData(result_data)
+        var options_data  = {}
+        this.createChart($project_by_emp,"bar",bar_data)
+    }
+
+    fetchProjectEmployeeData(){
+        return jsonrpc("web/dataset/call_kw/project.project/get_project_count_per_employee", {
+            model: 'project.project',
+            method: 'get_project_count_per_employee',
+            args: [{}],
+            kwargs: {}
+        });
     }
 
     // Fetch data from project
@@ -75,10 +94,11 @@ export class ProjectDashboard extends Component {
         }
     }
 
-    createChart(element, type, data) {
+    createChart(element, type, data, options={}) {
         new Chart(element, {
             type: type,
             data: data,
+            options : options
         })
     }
 

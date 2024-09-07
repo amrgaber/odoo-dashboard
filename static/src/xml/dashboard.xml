@@ -8,7 +8,8 @@
                     <div class="col-12 col-sm-6 col-md-3 col-lg-2 mb-4">
                         <div id="total_projects_main" class="project_box card" t-on-click="_onClickProjects">
                             <div class="card-body text-center">
-                                <img src="project_dashboard/static/src/images/search-img.png" class="img-fluid mb-2" alt="search" style="max-width: 40px;"/>
+                                <img src="project_dashboard/static/src/images/search-img.png" class="img-fluid mb-2"
+                                     alt="search" style="max-width: 40px;"/>
                                 <h3 class="project_count" id="total_projects">
                                     <t t-esc="this.project_state.projects_count"/>
                                 </h3>
@@ -42,6 +43,17 @@
                                         <div class="chart-container" style="position: relative; height: 300px;">
                                             <canvas t-ref="project_hours_ref_pie" class="project_hours_pie"></canvas>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Bar Chart -->
+                            <div class="col-sm-12 col-md-6">
+                                <div class="projects_hours_pie_div half_chart chart-container card-shadow">
+                                    <h2>Projects Counts Per Employee </h2>
+                                    <hr/>
+                                    <div class="graph_canvas">
+                                        <canvas t-ref="project_count_per_emp" width="300"
+                                                height="200"/>
                                     </div>
                                 </div>
                             </div>

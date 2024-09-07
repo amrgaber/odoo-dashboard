@@ -26,4 +26,12 @@ class ProjectProject(models.Model):
         names = [project_name for project_name in project_with_hours]
         counts = [project_with_hours[project_name] for project_name in project_with_hours]
 
-        return [counts,names]
+        return [counts, names]
+
+    @api.model
+    def get_project_count_per_employee(self, kwargs):
+        lst = [
+            [10, 20, 30,15,25],
+            ['Ahmed','Ali','Mohamed','AAA','BBB']
+        ]
+        return lst
